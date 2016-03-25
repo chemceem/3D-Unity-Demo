@@ -9,6 +9,8 @@ public class PlayerShooting : MonoBehaviour {
 	public GameObject bulletImpact;
 	public GameObject explosion;
 
+	public GameController gameController;
+
 	//PRIVATE INSTANCE VARIABLES 
 	private Transform _transform;
 
@@ -28,11 +30,12 @@ public class PlayerShooting : MonoBehaviour {
 
 			RaycastHit hit; // used to store information from the casted ray
 
-			if(Physics.Raycast(this._transform.position, this._transform.forward, out hit, 50f)){
+			if(Physics.Raycast(this._transform.position, this._transform.forward, out hit, 100f)){
 				
 				if (hit.transform.gameObject.CompareTag ("barrel")) {
 					Instantiate (this.explosion, hit.point, Quaternion.identity);
 					Destroy (hit.transform.gameObject);
+					this.gameController.ScoreValue += 100;
 				} else {
 					Instantiate (this.bulletImpact, hit.point, Quaternion.identity);
 				}
