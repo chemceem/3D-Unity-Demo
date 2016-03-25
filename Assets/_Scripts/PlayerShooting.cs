@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerShooting : MonoBehaviour {
 
 	//PUBLIC INSTANCE VARIABLES
 	public Transform flashPoint;
 	public GameObject muzzleFlash;
 	public GameObject bulletImpact;
+	public GameObject explosion;
 
 	//PRIVATE INSTANCE VARIABLES 
 	private Transform _transform;
@@ -28,7 +29,13 @@ public class PlayerController : MonoBehaviour {
 			RaycastHit hit; // used to store information from the casted ray
 
 			if(Physics.Raycast(this._transform.position, this._transform.forward, out hit, 50f)){
-				Instantiate (this.muzzleFlash, hit.point, Quaternion.identity);
+				
+				if (hit.transform.gameObject.CompareTag ("barrel")) {
+					Instantiate (this.explosion, hit.point, Quaternion.identity);
+					Destroy (hit.transform.gameObject);
+				} else {
+					Instantiate (this.bulletImpact, hit.point, Quaternion.identity);
+				}
 			}
 		}
 	}//end fixedupdate

@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: c286070358296b34f80ba14bca0e5e3b
-timeCreated: 1458790812
+timeCreated: 1458877069
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - flashPoint: {instanceID: 0}
-  - muzzleFlash: {fileID: 191358, guid: eb0ef556bdd3ef1489682408f2805c61, type: 2}
-  - bulletImpact: {fileID: 143354, guid: 80d355942485bc748817e330869321ba, type: 2}
+  - muzzleFlash: {instanceID: 0}
+  - bulletImpact: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
