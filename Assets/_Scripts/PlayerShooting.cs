@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * @author : Chemcee Cherian , 300793352 
+ * Last modified : 25-03-2016  
+ * */
 public class PlayerShooting : MonoBehaviour {
 
 	//PUBLIC INSTANCE VARIABLES
@@ -9,14 +13,14 @@ public class PlayerShooting : MonoBehaviour {
 	public GameObject bulletImpact;
 	public GameObject explosion;
 
-	public GameController gameController;
-
 	//PRIVATE INSTANCE VARIABLES 
 	private Transform _transform;
+	private GameController _gameController;
 
 	// Use this for initialization
 	void Start () {
 		this._transform = this.gameObject.GetComponent<Transform> ();
+		this._gameController = GameObject.FindWithTag ("GameController").GetComponent("GameController") as GameController;
 	}
 	
 	// Update is called once per frame
@@ -25,7 +29,7 @@ public class PlayerShooting : MonoBehaviour {
 	} //end update
 
 	void FixedUpdate(){
-		if (Input.GetButtonDown ("Fire1")) {
+		if (Input.GetButtonDown ("Fire1") && this._gameController.isFire) {
 			Instantiate (this.muzzleFlash, flashPoint.position, Quaternion.identity);
 
 			RaycastHit hit; // used to store information from the casted ray
@@ -35,7 +39,7 @@ public class PlayerShooting : MonoBehaviour {
 				if (hit.transform.gameObject.CompareTag ("barrel")) {
 					Instantiate (this.explosion, hit.point, Quaternion.identity);
 					Destroy (hit.transform.gameObject);
-					this.gameController.ScoreValue += 100;
+					this._gameController.ScoreValue += 100;
 				} else {
 					Instantiate (this.bulletImpact, hit.point, Quaternion.identity);
 				}

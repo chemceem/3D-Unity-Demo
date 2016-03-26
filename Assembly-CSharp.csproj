@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\_Scripts\DeathPlaneController.cs" />
      <Compile Include="Assets\_Scripts\GameController.cs" />
      <Compile Include="Assets\_Scripts\PlayerShooting.cs" />
      <Compile Include="Assets\_Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />

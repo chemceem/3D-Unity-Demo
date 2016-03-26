@@ -21,9 +21,12 @@ public class GameController : MonoBehaviour {
 	public Text LivesText;
 	public Text ScoreText;
 	public Text GameoverText;
+	public Text TimeLabel;
 	public Text HighScoreText;
 	public Button RestartButton;
 	public GameObject player;
+	public float timerValue = 22f;	//each round of the game will last for 25 seconds
+	public bool isFire = true;
 
 	//PUBLIC ACCESS METHODS
 	public int ScoreValue{
@@ -32,7 +35,12 @@ public class GameController : MonoBehaviour {
 		}
 		set { 
 			this._scoreValue = value;
-			this.ScoreText.text = "SCORE : " + this._scoreValue;
+			if (this._scoreValue >= 2000) {
+				this.finishGame ();
+			} else {
+				this.ScoreText.text = "SCORE : " + this._scoreValue;
+			}
+
 		}
 	}
 
@@ -58,7 +66,7 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		this.timer();
 	}
 
 	//PRIVATE METHODS
@@ -73,30 +81,45 @@ public class GameController : MonoBehaviour {
 	}
 
 	//THIS METHOD IS CALLED WHEN THE PLAYER HAS LOST ALL HIS LIVES
-	private void _endGame(){		
-		this.HighScoreText.text = "SCORE : " + this._scoreValue;
+	private void _endGame(){	
+		this.isFire = false;	
+		this.HighScoreText.text = "HIGH SCORE : " + this._scoreValue;
 		this.GameoverText.enabled = true;
+		this.TimeLabel.enabled = false;
 		this.ScoreText.enabled = false;
 		this.HighScoreText.enabled = true;
 		this.RestartButton.gameObject.SetActive(true);
 		this.LivesText.enabled = false;
-		//this.heroController.gameObject.SetActive(false);
-		//this.heroController.cameraObject.position = new Vector3 (1,1,-10);
+		this.TimeLabel.enabled = false;
 	}
 
 	//PUBLIC METHOD
 
 	//THIS METHOD IS CALLED WHEN THE PLAYER REACHES THE FINISH POINT
 	public void finishGame(){
+		this.isFire = false;
+		this.GameoverText.enabled = true;
+		this.GameoverText.text = "YOU WON";
 		this.ScoreText.enabled = false;
 		this.LivesText.enabled = false;
 		this.HighScoreText.text = "HIGH SCORE : " + this._scoreValue;
 		this.HighScoreText.enabled = true;
+		this.TimeLabel.enabled = false;
 		this.RestartButton.gameObject.SetActive(true);
 	}
 
 	//CALLED WHEN THE RESTART BUTTON IS CLICKED. WILL RESTART THE GAME
 	public void RestartButtonClick(){		
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	//countdown timer for the game.
+	public void timer(){		
+		this.timerValue -= Time.deltaTime;
+		if (this.timerValue < 0) {
+			this._endGame ();
+		} else {
+			this.TimeLabel.text = "TIME : " + this.timerValue;
+		}
 	}
 }
